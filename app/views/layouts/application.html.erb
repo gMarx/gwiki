@@ -7,6 +7,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="container">
+    <div class="nav nav-tabs">
+      <%= link_to 'Home', welcome_index_path, class: 'pull-left' %>
+      <%= link_to 'About', welcome_about_path, class: 'pull-left' %>
+    </div>
+  </div>
 
 <%= yield %>
 
