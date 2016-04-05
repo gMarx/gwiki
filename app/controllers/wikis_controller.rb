@@ -1,5 +1,7 @@
 class WikisController < ApplicationController
 
+  before_action :authenticate_user!, except: [:index]
+
   def index
     @wikis = Wiki.all
   end
@@ -57,6 +59,7 @@ class WikisController < ApplicationController
 
   private
 
+  # params = { controller: 'WikiController', action: 'update', id: 123, wiki: { title: 'asdf', body: 'qwerqwerw'} }
   def wiki_params
     params.require(:wiki).permit(:title, :body, :private)
   end
