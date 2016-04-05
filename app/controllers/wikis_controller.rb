@@ -1,9 +1,11 @@
 class WikisController < ApplicationController
+
   def index
     @wikis = Wiki.all
   end
 
   def show
+    @wiki = Wiki.find(params[:id])
   end
 
   def new
@@ -15,6 +17,17 @@ class WikisController < ApplicationController
   end
 
   def create
+    @wiki = Wiki.create( wiki_params )
+    @wiki.user = current_user
+
+    if @wiki.save
+      flash[:notice] = 'Wiki was saved'
+      redirect_to @wiki
+    else
+      flash.now[:alert] = 'There was an error saving the wiki. Please try again.'
+      render :new
+    end
+
   end
 
   def update
@@ -31,9 +44,19 @@ class WikisController < ApplicationController
   end
 
   def destroy
+    @wiki = Wiki.find(params[:id])
+
+    if @wiki.destroy
+      flash[:notice] = "#{@wiki.title} was successfully deleted."
+      redirect_to action: :index
+    else
+      flash[:alert] = "#{@wiki.title} could not be deleted."
+      render :show
+    end
   end
 
   private
+
   def wiki_params
     params.require(:wiki).permit(:title, :body, :private)
   end
