@@ -1,2 +1,14 @@
-<h1>Wikis#new</h1>
-<p>Find me in app/views/wikis/new.html.erb</p>
+<div class="row">
+  <div class="col-md-4">
+    <p>Wikis Etiquette</p>
+    <ul>
+      <li>Teach me something</li>
+      <li>Write passionately</li>
+      <li>Use of Hashtags strictly forbidden</li>
+    </ul>
+  </div>
+
+  <div class="col-md-8">
+    <%= render partial: 'form', locals: { user: @user, wiki: @wiki } %>
+  </div>
+</div>
