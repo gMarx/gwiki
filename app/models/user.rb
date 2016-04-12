@@ -6,4 +6,12 @@ class User < ActiveRecord::Base
          :confirmable
 
   has_many :wikis, dependent: :destroy
+
+  after_initialize :default_role
+
+  def default_role
+    self.role ||= :standard
+  end
+
+  enum role: [:standard, :premium, :admin]
 end
