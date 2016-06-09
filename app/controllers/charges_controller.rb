@@ -1,9 +1,10 @@
+require 'amount'
+
 class ChargesController < ApplicationController
 
   def create
    # Creates a Stripe Customer object, for associating
    # with the charge
-    @amount = 15_00 #in pennies == $15.00
     customer = Stripe::Customer.create(
       email: current_user.email,
       card: params[:stripeToken]
@@ -12,11 +13,11 @@ class ChargesController < ApplicationController
     # Where the real magic happens
     charge = Stripe::Charge.create(
       customer: customer.id, # Note -- this is NOT the user_id in your app
-      amount: @amount, #removed Amount.default and set value above
+      amount: Amount.default,
       description: "gWiki Membership - #{current_user.email}",
       currency: 'usd'
     )
-#  if SUCCESS
+
     current_user.role = :premium
     current_user.save
     flash[:notice] = "Thanks for upgrading your gWiki account, #{current_user.email}! I hope you enjoy."
@@ -31,13 +32,18 @@ class ChargesController < ApplicationController
   end
 
   def new
-    @amount = 15_00 #in pennies == $15.00
-
     @stripe_btn_data = {
       key: "#{ Rails.configuration.stripe[:publishable_key] }",
       description: "gWiki Membership - #{current_user.email}",
-      amount: @amount #Amount.default
+      amount: Amount.default
     }
+  end
+
+  def downgrade
+    current_user.role = :standard
+    current_user.save
+    flash[:notice] = 'You have canceled your account and returned to a Free plan.'
+    redirect_to edit_user_registration_path(current_user)
   end
 
 end

@@ -32,9 +32,9 @@
   </div>
 <% end %>
 
-<% if current_user.role == 'premium' %>
+<% if current_user.premium? %>
   <h3>Downgrade my account to Free</h3>
-  <%= button_to 'Click here to downgrade', root_path, data: { confirm: 'Are you sure?' }, method: :get %>
+  <%= button_to 'Click here to downgrade', downgrade_charges_path, data: { confirm: 'Are you sure?' } %>
 <% end %>
 
 <h3>Cancel my account</h3>
