@@ -9,13 +9,22 @@
       </ul>
     </div>
   <% end %>
+
   <%= form_group_tag(wiki.errors[:title]) do %>
     <%= f.label :title %>
     <%= f.text_field :title, class: 'form-control', placeholder: 'Enter wiki title' %>
   <% end %>
+
   <%= form_group_tag(wiki.errors[:body]) do %>
     <%= f.label :body %>
     <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: 'Enter wiki body ...' %>
+  <% end %>
+
+  <% if current_user.role != 0 %>
+    <%= form_group_tag(wiki.errors[:private]) do %>
+      <%= check_box_tag(:private) %>
+      <%= label_tag(:private, "Make Wiki Private") %>
+    <% end %>
   <% end %>
 
   <div class="form-group">
