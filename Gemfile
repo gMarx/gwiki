@@ -23,11 +23,12 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 gem 'bootstrap-sass'
-gem 'figaro'
+gem 'figaro', '1.0'
 gem 'pry'
 gem 'devise'
 gem 'rename'
 gem 'pundit'
+gem 'stripe'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
