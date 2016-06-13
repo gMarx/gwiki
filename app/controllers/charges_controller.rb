@@ -42,7 +42,14 @@ class ChargesController < ApplicationController
   def downgrade
     current_user.role = :standard
     current_user.save
-    flash[:notice] = 'You have canceled your account and returned to a Free plan.'
+    # make all private wikis owned by this user public
+    current_user.wikis.each do |wiki|
+      if wiki.private?
+        wiki.update_attribute(:private, false)
+      end
+    end
+
+    flash[:notice] = 'You have canceled your account and returned to a Free plan. All of your former private wikis (if any), are now public.'
     redirect_to edit_user_registration_path(current_user)
   end
 
