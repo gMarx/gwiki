@@ -21,9 +21,11 @@
   <% end %>
 
   <% if !current_user.standard?  %>
+  <!-- equivalent to if current_user.premium? || current_user.admin? -->
     <%= form_group_tag(wiki.errors[:private]) do %>
-      <%= check_box_tag(:private) %>
-      <%= label_tag(:private, "Make Wiki Private") %>
+      <%= f.label :private, class: 'checkbox' do %>
+      <%= f.check_box :private %> Private wiki
+      <% end %>
     <% end %>
   <% end %>
 
