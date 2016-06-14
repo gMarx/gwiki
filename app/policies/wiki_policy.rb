@@ -3,12 +3,7 @@ class WikiPolicy < ApplicationPolicy
     record.present? && (record.user == user || !record.private? )
   end
 
-  def edit?
-    # allow all users to edit any wiki (they can see)
-    record.present?
-  end
-
-  def view?
+  def show?
     # see public wikis & private ones created by self
     record.present? && (record.user == user || record.user.role == :admin || record.private? == false)
   end

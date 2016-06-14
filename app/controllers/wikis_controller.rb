@@ -8,6 +8,7 @@ class WikisController < ApplicationController
 
   def show
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   def new
@@ -20,8 +21,9 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = Wiki.create( wiki_params )
+    @wiki = Wiki.new( wiki_params )
     @wiki.user = current_user
+    authorize @wiki
 
     if @wiki.save
       flash[:notice] = 'Wiki was saved'
@@ -36,10 +38,9 @@ class WikisController < ApplicationController
   def update
     @wiki = Wiki.find(params[:id])
     authorize @wiki
-    @wiki.update_attributes( wiki_params )
 
-    if @wiki.save
-      flash[:notice] = 'Wiki was updated'
+    if @wiki.update_attributes( wiki_params )
+      flash[:notice] = 'Wiki successfully updated.'
       redirect_to @wiki
     else
       flash.now[:alert] = 'There was an error saving the wiki. Please try again.'
