@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'collaborators/create'
+
+  get 'collaborators/destroy'
+
   resources :wikis
   resources :charges, only: [:new, :create] do
     collection do
