@@ -1,9 +1,47 @@
-<% if collaborator = current_user.collaborator_for(wiki) %>
-    <%= link_to [wiki, collaborator], class: 'btn btn-danger', method: :delete do %>
-      <i class="glyphicon glyphicon-star-empty"> </i>&nbsp; Remove Collaborator
+<!--  if collaborator = current_user.collaborator_for(wiki) %>
+    < %= link_to [wiki, collaborator], class: 'btn btn-danger', method: :delete do %>
+      Remove Collaborator
+    < end %>
+ else %>
+  < = link_to collaborators_path, class: 'btn btn-primary', method: :post do %>
+    Add Collaborator
+  < end %>
+ end %>
+ -->
+
+<!-- < %= render partial: 'collaborators/collaborator', locals: {wiki: @wiki, user: @user} %> -->
+
+<!-- list out all users below -->
+<h1>Manage Users/Collaborators</h1>
+<div class="row">
+  <div class="col-md-8">
+    <% @users.each do |user| %>
+      <% if user == current_user %>
+      <!-- do not show ability to add self as collaborator -->
+      <% elsif user %>
+        <div class="media">
+          <div class="media-body">
+            <h4 class="media-heading col-md-4 pull-left">
+              <%= user.email %>
+            </h4>
+        <!-- user == user.collaborator_for(wiki) -->
+            <%= link_to collaborator_path, class: 'btn btn-danger col-md-4', method: :delete do %>
+              Remove Collaborator
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+          <div class="media">
+            <div class="media-body">
+              <h4 class="media-heading col-md-4 pull-left">
+                <%= user.email %>
+              </h4>
+              <%= link_to collaborators_path, class: 'btn btn-primary', method: :post do %>
+                Add Collaborator
+              <% end %>
+            </div>
+          </div>
+      <% end %>
     <% end %>
-<% else %>
-  <%= link_to [wiki, Collaborator.new], class: 'btn btn-primary', method: :post do %>
-      <i class="glyphicon glyphicon-stars"> </i>&nbsp; Add Collaborator
-  <% end %>
-<% end %>
+  </div>
+</div>

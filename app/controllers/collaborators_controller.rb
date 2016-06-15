@@ -24,4 +24,10 @@ class CollaboratorsController < ApplicationController
 
     redirect_to [wiki]
   end
+
+  # def index
+  #   # @wiki = Wiki.find(params[:wiki_id])
+  #   @wikis = policy_scope(Wiki)
+  #   @users = User.all
+  # end
 end
