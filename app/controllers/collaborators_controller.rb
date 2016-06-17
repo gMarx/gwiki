@@ -1,7 +1,8 @@
 class CollaboratorsController < ApplicationController
   def create
     wiki = Wiki.find(params[:wiki_id])
-    collaborator = current_user.collaborators.build(wiki: wiki)
+    user = User.find(params[:user_id])
+    collaborator = user.collaborators.build(wiki: wiki)
 
     if collaborator.save
       flash[:notice] = 'Collaborator Added.'
@@ -14,9 +15,11 @@ class CollaboratorsController < ApplicationController
 
   def destroy
     wiki = Wiki.find(params[:wiki_id])
-    collaborator = current_user.collaborators.find(params[:id])
+    user = User.find(params[:user_id])
+    collaborator = Collaborator.where(user_id: user.id, wiki_id: wiki.id).first
+    # user.collaborators.find(wiki_id: wiki.id, user_id: user.id)
 
-    if favorite.destroy
+    if collaborator.destroy
       flash[:notice] = 'Collaborator removed.'
     else
       flash[:alert] = 'Failed to remove Collaborator.'
@@ -24,10 +27,4 @@ class CollaboratorsController < ApplicationController
 
     redirect_to [wiki]
   end
-
-  # def index
-  #   # @wiki = Wiki.find(params[:wiki_id])
-  #   @wikis = policy_scope(Wiki)
-  #   @users = User.all
-  # end
 end
