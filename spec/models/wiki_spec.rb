@@ -4,6 +4,8 @@ RSpec.describe Wiki, type: :model do
   let(:user) { User.create!(email: 'test@test.com', password: 'helloworld', confirmed_at: Time.now) }
   let(:wiki) { Wiki.create!(title: 'Wiki Title', body: 'body of wiki', private: false, user: user)}
 
+  it { is_expected.to have_many(:collaborators)}
+
   describe 'attributes' do
      it 'responds to title' do
        expect(wiki).to respond_to(:title)

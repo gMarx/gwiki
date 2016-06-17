@@ -1,4 +1,5 @@
 <h1>Edit Wiki</h1>
+<%= params %>
 
 <div class='row'>
   <div class='col-md-4'>
@@ -13,5 +14,7 @@
   <div class="col-md-8">
     <%= render partial: 'form', locals: { user: @user, wiki: @wiki } %>
   </div>
-
 </div>
+
+
+<%= render partial: 'collaborators/collaborator', locals: {wiki: @wiki, user: @user} %>
